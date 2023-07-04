@@ -1,0 +1,68 @@
+.container {
+    padding: 5px;
+}
+
+.container__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+    margin: 2px;
+    background-color: white;
+}
+
+.container__row--list {
+    padding: 10px;
+    margin: 2px;
+    background-color: white;
+}
+
+.header {
+    margin: 2px;
+}
+
+.container__row--grid {
+    display: grid;
+    grid-template-columns: 40px 2fr 40px;
+    margin: 5px;
+}
+
+.delete__button {
+    margin: 0, 5px;
+    padding: 10px;
+    background-color: red;
+    border: none;
+    color: white;
+    transition: 1s;
+}
+.delete__button:hover {
+    transform: scale(1.1);
+}
+
+.toggle__button {
+    margin: 0, 5px;
+    padding: 10px;
+    background-color: green;
+    border: none;
+    color: white;
+    transition: 1s;
+}
+.toggle__button:hover {
+    transform: scale(1.1);
+}
+
+.task__list {
+    padding: 10px;
+}
+
+.task__list--done {
+    padding: 10px;
+    text-decoration: line-through;
+}
+
+.container__button {
+    color: teal;
+    margin: 1px;
+    padding: 1px;
+    border: none;
+    background: none;
+}
