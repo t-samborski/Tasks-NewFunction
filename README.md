@@ -11,3 +11,5 @@
 ##After adding the first task, additional options appear that allow you to complete all the listed tasks and hide them if necessary. After hiding tasks, it is possible to show them again.
 
 ![Photo new function](https://github.com/t-samborski/Tasks-NewFunction/blob/main/Show%20done%20foto%20to%20readme.jpg?raw=true)
+
+##The task was carried out using HTML, CSS and Java Script programming language.
