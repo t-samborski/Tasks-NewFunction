@@ -1,5 +1,6 @@
 {
     let tasks = [];
+    let hideDoneStatus = false;
 
     const toggleTask = (arrayElement) => {
         tasks = tasks.map((task, index) =>
@@ -16,12 +17,25 @@
         let htmlString = "";
         for (const task of tasks) {
             htmlString += `<li class = container__row--grid>
-                <button class="toggle__button"></button>
-                <div class="task__list">${task.content}</div>
+                <button class="toggle__button">${task.done ? "✔" : ""}</button>
+                <div class="task__list ${task.done ? "task__list--done" : ""}">${task.content}</div>
                 <button class="delete__button">🗑</button>
                 </li>`
         }
         document.querySelector(".js-taskList").innerHTML = htmlString;
+    }
+    const visibilityStatus = () => {
+        const visibilityButtonsStatus = document.querySelector(".js-visibilityButtons");
+
+        if (!tasks.length) {
+            visibilityButtonsStatus.innerHTML = "";
+            return;
+        }
+
+        visibilityButtonsStatus.innerHTML = ` 
+        <button class="container__button js-visibleButton">${hideDoneStatus ? "Pokaż" : "Ukryj"} ukończone</button>
+        <button class="container__button js-allDoneTaskButton">Ukończ wszystkie</button>
+        `;
     }
 
     const addNewTask = (addTask) => {
@@ -65,6 +79,7 @@
         newTaskContent();
         toggleTaskButtons();
         deleteTaskButtons();
+        visibilityStatus();
     }
 
     const init = () => {
