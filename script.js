@@ -13,17 +13,34 @@
         render();
     }
 
-    const newTaskContent = () => {
-        let htmlString = "";
-        for (const task of tasks) {
-            htmlString += `<li class = container__row--grid>
-                <button class="toggle__button">${task.done ? "✔" : ""}</button>
-                <div class="task__list ${task.done ? "task__list--done" : ""}">${task.content}</div>
-                <button class="delete__button">🗑</button>
-                </li>`
-        }
-        document.querySelector(".js-taskList").innerHTML = htmlString;
+    const completeAllQuests = () => {
+        tasks = tasks.map((task) => ({
+            ...task,
+            done: true,
+        }));
+        render();
+    };
+
+    const completionStatus = () => {
+        hideDoneStatus = !hideDoneStatus;
+        render();
     }
+
+    const statusChangingButtons = () => {
+
+        const allDoneTask = document.querySelector(".js-allDoneTaskButton");
+
+        if (allDoneTask) {
+            allDoneTask.addEventListener("click", completeAllQuests);
+        }
+
+        const visibleTaskStatus = document.querySelector(".js-visibleButton");
+
+        if (visibleTaskStatus) {
+            visibleTaskStatus.addEventListener("click", completionStatus);
+        }
+    };
+
     const visibilityStatus = () => {
         const visibilityButtonsStatus = document.querySelector(".js-visibilityButtons");
 
@@ -38,27 +55,42 @@
         `;
     }
 
-    const addNewTask = (addTask) => {
+    const contentList = () => {
+        let htmlString = "";
+        for (const task of tasks) {
+        htmlString += hideDoneStatus && task.done ? "" :
+            `<li class = container__row--grid>
+            <button class="toggle__button">${task.done ? "✔" : ""}</button>
+            <div class="task__list ${task.done ? "task__list--done" : ""}">${task.content}</div>
+            <button class="delete__button">🗑</button>
+            </li>
+            `
+        }
+        
+        document.querySelector(".js-taskList").innerHTML = htmlString;
+    }
+
+    const addNewTask = (newTask) => {
         tasks = [...tasks,
-        { content: addTask }
+        { content: newTask }
         ];
         render();
     }
 
-    const formLock = (event) => {
+    const formBlock = (event) => {
         event.preventDefault();
 
-        const inputElement = document.querySelector(".js-input");
-        addTask = inputElement.value.trim();
+        const newContent = document.querySelector(".js-input");
+        const newTask = newContent.value.trim();
 
-        if (addTask !== "") {
-            addNewTask(addTask);
-            inputElement.value = "";
+        if (newTask !== "") {
+            addNewTask(newTask);
+            newContent.value = "";
         }
-        inputElement.focus();
-    }
 
-    const deleteTaskButtons = () => {
+        newContent.focus();
+    }
+    const removeEvents = () => {
         const deleteButtons = document.querySelectorAll(".delete__button");
         deleteButtons.forEach((removeButton, index) => {
             removeButton.addEventListener("click", () => {
@@ -66,7 +98,7 @@
             })
         })
     }
-    const toggleTaskButtons = () => {
+    const toggleEvents = () => {
         const toggleButtons = document.querySelectorAll(".toggle__button");
         toggleButtons.forEach((toggleButton, index) => {
             toggleButton.addEventListener("click", () => {
@@ -76,19 +108,18 @@
     }
 
     const render = () => {
-        newTaskContent();
-        toggleTaskButtons();
-        deleteTaskButtons();
+        contentList();
+        removeEvents();
+        toggleEvents();
         visibilityStatus();
+        statusChangingButtons();
     }
 
     const init = () => {
         render();
         const formElement = document.querySelector(".js-form");
-        formElement.addEventListener("submit", formLock);
+        formElement.addEventListener("submit", formBlock);
     };
 
-
     init();
-
 }
