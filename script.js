@@ -1,6 +1,17 @@
 {
     let tasks = [];
 
+    const toggleTask = (arrayElement) => {
+        tasks = tasks.map((task, index) =>
+            index === arrayElement ? { ...task, done: !task.done } : task);
+        render();
+    }
+
+    const removeTask = (arrayElement) => {
+        tasks = tasks.filter((task, index) => index !== arrayElement);
+        render();
+    }
+
     const newTaskContent = () => {
         let htmlString = "";
         for (const task of tasks) {
@@ -33,9 +44,27 @@
         inputElement.focus();
     }
 
+    const deleteTaskButtons = () => {
+        const deleteButtons = document.querySelectorAll(".delete__button");
+        deleteButtons.forEach((removeButton, index) => {
+            removeButton.addEventListener("click", () => {
+                removeTask(index);
+            })
+        })
+    }
+    const toggleTaskButtons = () => {
+        const toggleButtons = document.querySelectorAll(".toggle__button");
+        toggleButtons.forEach((toggleButton, index) => {
+            toggleButton.addEventListener("click", () => {
+                toggleTask(index);
+            })
+        })
+    }
+
     const render = () => {
         newTaskContent();
-       
+        toggleTaskButtons();
+        deleteTaskButtons();
     }
 
     const init = () => {
