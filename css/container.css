@@ -67,3 +67,9 @@
     border: none;
     background: none;
 }
+.container__button:disabled{
+    color: rgb(170, 170, 170);
+}
+.task__hiden {
+    display: none;
+}

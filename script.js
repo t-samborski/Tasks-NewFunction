@@ -51,24 +51,22 @@
 
         visibilityButtonsStatus.innerHTML = ` 
         <button class="container__button js-visibleButton">${hideDoneStatus ? "Pokaż" : "Ukryj"} ukończone</button>
-        <button class="container__button js-allDoneTaskButton">Ukończ wszystkie</button>
+        <button class="container__button js-allDoneTaskButton" ${tasks.every(({done})=>done) ? "disabled" : ""}>Ukończ wszystkie</button>
         `;
     }
 
     const contentList = () => {
-        let htmlString = "";
-        for (const task of tasks) {
-        htmlString += hideDoneStatus && task.done ? "" :
-            `<li class = container__row--grid>
+        const taskToHTML = task =>
+        
+            `<li class = "container__row--grid${hideDoneStatus && task.done ? " task__hiden" : ""}">
             <button class="toggle__button">${task.done ? "✔" : ""}</button>
             <div class="task__list ${task.done ? "task__list--done" : ""}">${task.content}</div>
             <button class="delete__button">🗑</button>
             </li>
             `
+            const taskElement = document.querySelector(".js-taskList");
+            taskElement.innerHTML = tasks.map(taskToHTML).join("");
         }
-        
-        document.querySelector(".js-taskList").innerHTML = htmlString;
-    }
 
     const addNewTask = (newTask) => {
         tasks = [...tasks,
